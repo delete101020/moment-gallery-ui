@@ -11,41 +11,41 @@ import expense7 from "@/assets/expense-7.jpg";
 import expense8 from "@/assets/expense-8.jpg";
 import expense9 from "@/assets/expense-9.jpg";
 
-// Sample expense data with images
-const expenseData: Record<number, { image: string; category: string }> = {
-  3: { image: expense1, category: "food" },
-  4: { image: expense2, category: "cafe" },
-  5: { image: expense3, category: "shopping" },
-  6: { image: expense4, category: "food" },
-  8: { image: expense5, category: "food" },
-  9: { image: expense6, category: "food" },
-  10: { image: expense7, category: "beauty" },
-  11: { image: expense8, category: "shopping" },
-  12: { image: expense9, category: "food" },
-  13: { image: expense1, category: "food" },
-  14: { image: expense2, category: "cafe" },
-  15: { image: expense3, category: "shopping" },
-  16: { image: expense4, category: "food" },
-  17: { image: expense5, category: "food" },
-  18: { image: expense6, category: "food" },
-  19: { image: expense8, category: "shopping" },
-  20: { image: expense1, category: "food" },
-  21: { image: expense7, category: "beauty" },
-  22: { image: expense2, category: "cafe" },
-  23: { image: expense4, category: "food" },
-  24: { image: expense5, category: "food" },
-  25: { image: expense9, category: "food" },
-  26: { image: expense2, category: "cafe" },
-  27: { image: expense8, category: "shopping" },
-  28: { image: expense1, category: "food" },
-  29: { image: expense6, category: "food" },
+// Sample calendar thumbnails (matching the sample: some days have 1 photo, some have 2)
+const dayPhotos: Record<number, string[]> = {
+  3: [expense1],
+  4: [expense2],
+  5: [expense8],
+  6: [expense4],
+  8: [expense3],
+  9: [expense5, expense6],
+  10: [expense7],
+  11: [expense8, expense2],
+  12: [expense9],
+  13: [expense1],
+  14: [expense6],
+  15: [expense4],
+  16: [expense3],
+  17: [expense5],
+  18: [expense1],
+  19: [expense2],
+  20: [expense5],
+  21: [expense7],
+  22: [expense9],
+  23: [expense1, expense6],
+  24: [expense4],
+  25: [expense5],
+  26: [expense2],
+  27: [expense8],
+  28: [expense1],
 };
 
 const CalendarView = () => {
   const days = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
   const currentDay = 29;
   const totalDays = 31;
-  const startOffset = 0; // Month starts on Monday
+  const startOffset = 2; // Tháng 12/2025 bắt đầu từ T4 (theo sample)
+  const plusDays = new Set<number>([1, 2, 7]);
 
   // Generate calendar cells
   const calendarCells = [];
@@ -64,34 +64,32 @@ const CalendarView = () => {
     <div className="px-4 py-2 animate-fade-in">
       {/* Month Summary Card */}
       <div className="bg-card rounded-3xl p-5 mb-4">
-        <h2 className="text-center text-lg font-semibold mb-4 text-foreground">
+        <h2 className="text-center text-lg font-medium mb-4 text-foreground">
           Tháng 12, 2025
         </h2>
-        
-        {/* Expense/Income Summary - Matching sample exactly */}
+
+        {/* Expense/Income Summary (pills include arrow + label, like sample) */}
         <div className="flex gap-3 mb-6">
-          {/* Expense Card */}
           <div className="flex-1 bg-secondary rounded-2xl p-4">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <ArrowUpRight className="w-4 h-4 text-expense" />
-              <span className="text-expense text-sm font-medium border border-expense rounded-full px-3 py-0.5">
+            <div className="flex justify-center mb-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-expense px-3 py-1 text-sm font-medium text-expense">
+                <ArrowUpRight className="h-4 w-4" />
                 Chi
               </span>
             </div>
-            <p className="text-center text-xl font-bold text-foreground">
+            <p className="text-center text-xl font-semibold text-foreground">
               -20.682.060đ
             </p>
           </div>
-          
-          {/* Income Card */}
+
           <div className="flex-1 bg-secondary rounded-2xl p-4">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <ArrowDownLeft className="w-4 h-4 text-income" />
-              <span className="text-income text-sm font-medium border border-income rounded-full px-3 py-0.5">
+            <div className="flex justify-center mb-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-income px-3 py-1 text-sm font-medium text-income">
+                <ArrowDownLeft className="h-4 w-4" />
                 Thu
               </span>
             </div>
-            <p className="text-center text-xl font-bold text-foreground">
+            <p className="text-center text-xl font-semibold text-foreground">
               +30,000,000đ
             </p>
           </div>
@@ -116,36 +114,58 @@ const CalendarView = () => {
               return <div key={index} className="aspect-square" />;
             }
             
-            const expense = cell.day ? expenseData[cell.day] : null;
+            const photos = cell.day ? dayPhotos[cell.day] : undefined;
             const isToday = cell.day === currentDay;
             const isFuture = cell.day && cell.day > currentDay;
-            
+
             return (
-              <div
-                key={index}
-                className="flex flex-col items-center gap-0.5"
-              >
-                <div
-                  className={`aspect-square w-full rounded-xl overflow-hidden flex items-center justify-center transition-all duration-200 ${
-                    expense
-                      ? "cursor-pointer hover:scale-105"
-                      : isFuture
-                      ? "bg-muted/30"
-                      : "bg-secondary hover:bg-secondary/80 cursor-pointer"
-                  }`}
-                >
-                  {expense ? (
-                    <img 
-                      src={expense.image} 
-                      alt="expense" 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : !isFuture ? (
-                    <Plus className="w-4 h-4 text-muted-foreground" />
-                  ) : null}
+              <div key={index} className="flex flex-col items-center gap-1">
+                <div className="aspect-square w-full">
+                  {photos?.length ? (
+                    photos.length === 1 ? (
+                      <div className="w-full h-full rounded-full overflow-hidden ring-2 ring-foreground/15 bg-secondary">
+                        <img
+                          src={photos[0]}
+                          alt={`Chi tiêu ngày ${cell.day}`}
+                          className={`w-full h-full object-cover scale-[1.2] ${
+                            (cell.day ?? 0) % 2 ? "rotate-[-8deg]" : "rotate-[8deg]"
+                          }`}
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative w-full h-full">
+                        <div className="absolute left-0 top-1 w-[78%] h-[78%] rounded-full overflow-hidden ring-2 ring-foreground/15 bg-secondary rotate-[-10deg]">
+                          <img
+                            src={photos[0]}
+                            alt={`Chi tiêu ngày ${cell.day} (1)`}
+                            className="w-full h-full object-cover scale-[1.25]"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="absolute right-0 bottom-1 w-[78%] h-[78%] rounded-full overflow-hidden ring-2 ring-foreground/15 bg-secondary rotate-[10deg]">
+                          <img
+                            src={photos[1]}
+                            alt={`Chi tiêu ngày ${cell.day} (2)`}
+                            className="w-full h-full object-cover scale-[1.25]"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                    )
+                  ) : isFuture ? (
+                    <div className="w-full h-full rounded-full bg-muted/30" />
+                  ) : plusDays.has(cell.day ?? -1) ? (
+                    <div className="w-full h-full rounded-full bg-secondary flex items-center justify-center">
+                      <Plus className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                  ) : (
+                    <div className="w-full h-full rounded-full bg-secondary/50" />
+                  )}
                 </div>
+
                 <span
-                  className={`text-xs font-medium ${
+                  className={`text-xs font-normal ${
                     isToday
                       ? "text-primary"
                       : isFuture
