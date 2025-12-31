@@ -8,9 +8,7 @@ const categories = [
   { name: "Grab/Be/Xanh SM", emoji: "🛵", amount: 612400 },
 ];
 
-const income = [
-  { name: "Lương", emoji: "💰", amount: 30000000 },
-];
+const income = [{ name: "Lương", emoji: "💰", amount: 30000000 }];
 
 const months = [
   { label: "Tháng 8", active: false },
@@ -24,7 +22,7 @@ const StatsView = () => {
   return (
     <div className="px-4 py-2 animate-fade-in">
       {/* Month Selector */}
-      <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+      <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4">
         {months.map((month, index) => (
           <button
             key={index}
@@ -49,12 +47,18 @@ const StatsView = () => {
             </div>
             <div>
               <span className="text-sm text-muted-foreground">Tổng chi</span>
-              <p className="text-lg font-bold text-expense">-20.682.060đ</p>
+              <p className="text-lg font-semibold text-expense">-20.682.060đ</p>
             </div>
           </div>
-          <div className="h-px my-3" style={{ backgroundImage: 'repeating-linear-gradient(90deg, hsl(var(--border)) 0, hsl(var(--border)) 4px, transparent 4px, transparent 8px)' }} />
-          
-          {/* Categories */}
+
+          <div
+            className="h-px my-3"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg, hsl(var(--border)) 0, hsl(var(--border)) 4px, transparent 4px, transparent 8px)",
+            }}
+          />
+
           <div className="space-y-4">
             {categories.map((cat, index) => (
               <div key={index} className="flex items-center gap-3">
@@ -63,8 +67,8 @@ const StatsView = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-muted-foreground">{cat.name}</p>
-                  <p className="text-base font-semibold text-foreground">
-                    -{cat.amount.toLocaleString('vi-VN')}đ
+                  <p className="text-base font-medium text-foreground">
+                    -{cat.amount.toLocaleString("vi-VN")}đ
                   </p>
                 </div>
               </div>
@@ -80,12 +84,18 @@ const StatsView = () => {
             </div>
             <div>
               <span className="text-sm text-muted-foreground">Tổng thu</span>
-              <p className="text-lg font-bold text-income">+30,000,000đ</p>
+              <p className="text-lg font-semibold text-income">+30,000,000đ</p>
             </div>
           </div>
-          <div className="h-px my-3" style={{ backgroundImage: 'repeating-linear-gradient(90deg, hsl(var(--border)) 0, hsl(var(--border)) 4px, transparent 4px, transparent 8px)' }} />
-          
-          {/* Income Sources */}
+
+          <div
+            className="h-px my-3"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg, hsl(var(--border)) 0, hsl(var(--border)) 4px, transparent 4px, transparent 8px)",
+            }}
+          />
+
           <div className="space-y-4">
             {income.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
@@ -94,8 +104,8 @@ const StatsView = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-muted-foreground">{item.name}</p>
-                  <p className="text-base font-semibold text-income">
-                    +{item.amount.toLocaleString('vi-VN')}đ
+                  <p className="text-base font-medium text-income">
+                    +{item.amount.toLocaleString("vi-VN")}đ
                   </p>
                 </div>
               </div>
