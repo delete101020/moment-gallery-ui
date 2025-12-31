@@ -1,43 +1,51 @@
 import { Plus } from "lucide-react";
 import { ArrowUpRight, ArrowDownLeft } from "lucide-react";
 
-// Sample expense data with emojis representing categories
-const expenseData: Record<number, { emoji: string; category: string }> = {
-  1: { emoji: "🍜", category: "food" },
-  2: { emoji: "☕", category: "cafe" },
-  3: { emoji: "🛒", category: "shopping" },
-  4: { emoji: "🍔", category: "food" },
-  5: { emoji: "🎮", category: "entertainment" },
-  6: { emoji: "🍕", category: "food" },
-  8: { emoji: "📱", category: "shopping" },
-  9: { emoji: "🍣", category: "food" },
-  10: { emoji: "🚕", category: "transport" },
-  11: { emoji: "🍝", category: "food" },
-  12: { emoji: "💅", category: "beauty" },
-  13: { emoji: "🥗", category: "food" },
-  14: { emoji: "🎬", category: "entertainment" },
-  15: { emoji: "☕", category: "cafe" },
-  16: { emoji: "🍲", category: "food" },
-  17: { emoji: "🛍️", category: "shopping" },
-  18: { emoji: "🍱", category: "food" },
-  19: { emoji: "📄", category: "bills" },
-  20: { emoji: "🍛", category: "food" },
-  21: { emoji: "🧁", category: "food" },
-  22: { emoji: "🥤", category: "cafe" },
-  23: { emoji: "🍜", category: "food" },
-  24: { emoji: "🛒", category: "shopping" },
-  25: { emoji: "🍔", category: "food" },
-  26: { emoji: "☕", category: "cafe" },
-  27: { emoji: "📱", category: "shopping" },
-  28: { emoji: "🍕", category: "food" },
-  29: { emoji: "🥗", category: "food" },
+import expense1 from "@/assets/expense-1.jpg";
+import expense2 from "@/assets/expense-2.jpg";
+import expense3 from "@/assets/expense-3.jpg";
+import expense4 from "@/assets/expense-4.jpg";
+import expense5 from "@/assets/expense-5.jpg";
+import expense6 from "@/assets/expense-6.jpg";
+import expense7 from "@/assets/expense-7.jpg";
+import expense8 from "@/assets/expense-8.jpg";
+import expense9 from "@/assets/expense-9.jpg";
+
+// Sample expense data with images
+const expenseData: Record<number, { image: string; category: string }> = {
+  3: { image: expense1, category: "food" },
+  4: { image: expense2, category: "cafe" },
+  5: { image: expense3, category: "shopping" },
+  6: { image: expense4, category: "food" },
+  8: { image: expense5, category: "food" },
+  9: { image: expense6, category: "food" },
+  10: { image: expense7, category: "beauty" },
+  11: { image: expense8, category: "shopping" },
+  12: { image: expense9, category: "food" },
+  13: { image: expense1, category: "food" },
+  14: { image: expense2, category: "cafe" },
+  15: { image: expense3, category: "shopping" },
+  16: { image: expense4, category: "food" },
+  17: { image: expense5, category: "food" },
+  18: { image: expense6, category: "food" },
+  19: { image: expense8, category: "shopping" },
+  20: { image: expense1, category: "food" },
+  21: { image: expense7, category: "beauty" },
+  22: { image: expense2, category: "cafe" },
+  23: { image: expense4, category: "food" },
+  24: { image: expense5, category: "food" },
+  25: { image: expense9, category: "food" },
+  26: { image: expense2, category: "cafe" },
+  27: { image: expense8, category: "shopping" },
+  28: { image: expense1, category: "food" },
+  29: { image: expense6, category: "food" },
 };
 
 const CalendarView = () => {
-  const days = ["M", "T", "W", "T", "F", "S", "S"];
+  const days = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
   const currentDay = 29;
   const totalDays = 31;
-  const startOffset = 2; // Month starts on Wednesday
+  const startOffset = 0; // Month starts on Monday
 
   // Generate calendar cells
   const calendarCells = [];
@@ -57,32 +65,34 @@ const CalendarView = () => {
       {/* Month Summary Card */}
       <div className="bg-card rounded-3xl p-5 mb-4">
         <h2 className="text-center text-lg font-semibold mb-4 text-foreground">
-          December 2025
+          Tháng 12, 2025
         </h2>
         
-        {/* Expense/Income Summary */}
+        {/* Expense/Income Summary - Matching sample exactly */}
         <div className="flex gap-3 mb-6">
-          <div className="flex-1 bg-background/50 rounded-2xl p-4 border border-expense/30">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full border-2 border-expense flex items-center justify-center">
-                <ArrowUpRight className="w-4 h-4 text-expense" />
-              </div>
-              <span className="text-expense text-sm font-medium">Expense</span>
+          {/* Expense Card */}
+          <div className="flex-1 bg-secondary rounded-2xl p-4">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <ArrowUpRight className="w-4 h-4 text-expense" />
+              <span className="text-expense text-sm font-medium border border-expense rounded-full px-3 py-0.5">
+                Chi
+              </span>
             </div>
             <p className="text-center text-xl font-bold text-foreground">
-              -$2,450.00
+              -20.682.060đ
             </p>
           </div>
           
-          <div className="flex-1 bg-background/50 rounded-2xl p-4 border border-income/30">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full border-2 border-income flex items-center justify-center">
-                <ArrowDownLeft className="w-4 h-4 text-income" />
-              </div>
-              <span className="text-income text-sm font-medium">Income</span>
+          {/* Income Card */}
+          <div className="flex-1 bg-secondary rounded-2xl p-4">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <ArrowDownLeft className="w-4 h-4 text-income" />
+              <span className="text-income text-sm font-medium border border-income rounded-full px-3 py-0.5">
+                Thu
+              </span>
             </div>
             <p className="text-center text-xl font-bold text-foreground">
-              +$5,000.00
+              +30,000,000đ
             </p>
           </div>
         </div>
@@ -100,7 +110,7 @@ const CalendarView = () => {
         </div>
         
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-1">
+        <div className="grid grid-cols-7 gap-1.5">
           {calendarCells.map((cell, index) => {
             if (cell.isEmpty) {
               return <div key={index} className="aspect-square" />;
@@ -116,16 +126,20 @@ const CalendarView = () => {
                 className="flex flex-col items-center gap-0.5"
               >
                 <div
-                  className={`aspect-square w-full rounded-xl flex items-center justify-center text-lg transition-all duration-200 ${
+                  className={`aspect-square w-full rounded-xl overflow-hidden flex items-center justify-center transition-all duration-200 ${
                     expense
-                      ? "bg-secondary hover:bg-secondary/80 cursor-pointer"
+                      ? "cursor-pointer hover:scale-105"
                       : isFuture
                       ? "bg-muted/30"
-                      : "bg-secondary/50 hover:bg-secondary/70 cursor-pointer"
+                      : "bg-secondary hover:bg-secondary/80 cursor-pointer"
                   }`}
                 >
                   {expense ? (
-                    <span className="text-xl">{expense.emoji}</span>
+                    <img 
+                      src={expense.image} 
+                      alt="expense" 
+                      className="w-full h-full object-cover"
+                    />
                   ) : !isFuture ? (
                     <Plus className="w-4 h-4 text-muted-foreground" />
                   ) : null}
