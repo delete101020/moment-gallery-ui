@@ -7,9 +7,9 @@ interface TabNavProps {
 
 const TabNav = ({ activeTab, onTabChange }: TabNavProps) => {
   const tabs = [
-    { id: "photos" as const, label: "Photos", icon: Image },
-    { id: "calendar" as const, label: "Calendar", icon: Calendar },
-    { id: "stats" as const, label: "Stats", icon: BarChart3 },
+    { id: "photos" as const, label: "Ảnh", icon: Image },
+    { id: "calendar" as const, label: "Lịch", icon: Calendar },
+    { id: "stats" as const, label: "Thống kê", icon: BarChart3 },
   ];
 
   return (

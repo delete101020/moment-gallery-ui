@@ -12,15 +12,15 @@ const BottomNav = ({ activeNav, onNavChange }: BottomNavProps) => {
         {/* Main Action Button */}
         <button className="w-full bg-secondary hover:bg-secondary/80 rounded-full py-4 px-6 flex items-center justify-center gap-3 transition-all mb-2">
           <Camera className="w-5 h-5 text-foreground" />
-          <span className="font-medium text-foreground">Home</span>
+          <span className="font-medium text-foreground">Trang chủ</span>
         </button>
         
         {/* Bottom Icons */}
         <div className="flex items-center justify-around py-1">
           {[
-            { id: "home" as const, icon: Home, label: "Home" },
-            { id: "wallet" as const, icon: Wallet, label: "Wallet" },
-            { id: "settings" as const, icon: Settings, label: "Settings" },
+            { id: "home" as const, icon: Home, label: "Trang chủ" },
+            { id: "wallet" as const, icon: Wallet, label: "Ví" },
+            { id: "settings" as const, icon: Settings, label: "Cài đặt" },
           ].map((item) => {
             const Icon = item.icon;
             const isActive = activeNav === item.id;

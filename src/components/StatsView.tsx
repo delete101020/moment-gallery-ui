@@ -13,9 +13,9 @@ const income = [
 ];
 
 const months = [
+  { label: "Tháng 8", active: false },
   { label: "Tháng 9", active: false },
   { label: "Tháng 10", active: false },
-  { label: "Tháng 12", active: false },
   { label: "Tháng 12", active: true },
   { label: "Năm mới 2026", active: false },
 ];
