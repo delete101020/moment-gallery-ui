@@ -11,7 +11,7 @@ import expense7 from "@/assets/expense-7.jpg";
 import expense8 from "@/assets/expense-8.jpg";
 import expense9 from "@/assets/expense-9.jpg";
 
-// Sample calendar thumbnails (matching the sample: some days have 1 photo, some have 2)
+// Sample calendar: ngày có 1 ảnh, 2 ảnh, dấu +, hoặc trống
 const dayPhotos: Record<number, string[]> = {
   3: [expense1],
   4: [expense2],
@@ -44,18 +44,16 @@ const CalendarView = () => {
   const days = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
   const currentDay = 29;
   const totalDays = 31;
-  const startOffset = 2; // Tháng 12/2025 bắt đầu từ T4 (theo sample)
-  const plusDays = new Set<number>([1, 2, 7]);
+  const startOffset = 2; // Tháng 12/2025 bắt đầu từ T4
+  const plusDays = new Set<number>([1, 2, 7, 29, 30, 31]);
 
   // Generate calendar cells
   const calendarCells = [];
   
-  // Add empty cells for offset
   for (let i = 0; i < startOffset; i++) {
     calendarCells.push({ day: null, isEmpty: true });
   }
   
-  // Add day cells
   for (let day = 1; day <= totalDays; day++) {
     calendarCells.push({ day, isEmpty: false });
   }
@@ -64,43 +62,43 @@ const CalendarView = () => {
     <div className="px-4 py-2 animate-fade-in">
       {/* Month Summary Card */}
       <div className="bg-card rounded-3xl p-5 mb-4">
-        <h2 className="text-center text-lg font-medium mb-4 text-foreground">
+        <h2 className="text-center text-base font-medium mb-4 text-foreground">
           Tháng 12, 2025
         </h2>
 
-        {/* Expense/Income Summary (pills include arrow + label, like sample) */}
-        <div className="flex gap-3 mb-6">
+        {/* Expense/Income Summary */}
+        <div className="flex gap-3 mb-5">
           <div className="flex-1 bg-secondary rounded-2xl p-4">
-            <div className="flex justify-center mb-3">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-expense px-3 py-1 text-sm font-medium text-expense">
-                <ArrowUpRight className="h-4 w-4" />
+            <div className="flex justify-center mb-2.5">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-expense px-3 py-1 text-sm text-expense">
+                <ArrowUpRight className="h-3.5 w-3.5" />
                 Chi
               </span>
             </div>
-            <p className="text-center text-xl font-semibold text-foreground">
+            <p className="text-center text-lg font-semibold text-foreground">
               -20.682.060đ
             </p>
           </div>
 
           <div className="flex-1 bg-secondary rounded-2xl p-4">
-            <div className="flex justify-center mb-3">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-income px-3 py-1 text-sm font-medium text-income">
-                <ArrowDownLeft className="h-4 w-4" />
+            <div className="flex justify-center mb-2.5">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-income px-3 py-1 text-sm text-income">
+                <ArrowDownLeft className="h-3.5 w-3.5" />
                 Thu
               </span>
             </div>
-            <p className="text-center text-xl font-semibold text-foreground">
+            <p className="text-center text-lg font-semibold text-foreground">
               +30,000,000đ
             </p>
           </div>
         </div>
         
         {/* Day Headers */}
-        <div className="grid grid-cols-7 gap-1 mb-2">
+        <div className="grid grid-cols-7 gap-1 mb-1.5">
           {days.map((day, index) => (
             <div
               key={index}
-              className="text-center text-xs text-muted-foreground font-medium py-1"
+              className="text-center text-xs text-muted-foreground py-1"
             >
               {day}
             </div>
@@ -108,7 +106,7 @@ const CalendarView = () => {
         </div>
         
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-1.5">
+        <div className="grid grid-cols-7 gap-x-1 gap-y-1">
           {calendarCells.map((cell, index) => {
             if (cell.isEmpty) {
               return <div key={index} className="aspect-square" />;
@@ -117,67 +115,71 @@ const CalendarView = () => {
             const photos = cell.day ? dayPhotos[cell.day] : undefined;
             const isToday = cell.day === currentDay;
             const isFuture = cell.day && cell.day > currentDay;
+            const showPlus = plusDays.has(cell.day ?? -1);
 
             return (
-              <div key={index} className="flex flex-col items-center gap-1">
-                <div className="aspect-square w-full">
+              <div key={index} className="flex flex-col items-center">
+                <div className="aspect-square w-full mb-0.5">
                   {photos?.length ? (
                     photos.length === 1 ? (
-                      <div className="w-full h-full rounded-full overflow-hidden ring-2 ring-foreground/15 bg-secondary">
+                      // Single photo - full circular
+                      <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
                         <img
                           src={photos[0]}
-                          alt={`Chi tiêu ngày ${cell.day}`}
-                          className={`w-full h-full object-cover scale-[1.2] ${
-                            (cell.day ?? 0) % 2 ? "rotate-[-8deg]" : "rotate-[8deg]"
-                          }`}
+                          alt=""
+                          className="w-full h-full object-cover"
                           loading="lazy"
                         />
                       </div>
                     ) : (
+                      // Two photos - overlapping circles
                       <div className="relative w-full h-full">
-                        <div className="absolute left-0 top-1 w-[78%] h-[78%] rounded-full overflow-hidden ring-2 ring-foreground/15 bg-secondary rotate-[-10deg]">
+                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary z-0">
                           <img
                             src={photos[0]}
-                            alt={`Chi tiêu ngày ${cell.day} (1)`}
-                            className="w-full h-full object-cover scale-[1.25]"
+                            alt=""
+                            className="w-full h-full object-cover"
                             loading="lazy"
                           />
                         </div>
-                        <div className="absolute right-0 bottom-1 w-[78%] h-[78%] rounded-full overflow-hidden ring-2 ring-foreground/15 bg-secondary rotate-[10deg]">
+                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary z-10">
                           <img
                             src={photos[1]}
-                            alt={`Chi tiêu ngày ${cell.day} (2)`}
-                            className="w-full h-full object-cover scale-[1.25]"
+                            alt=""
+                            className="w-full h-full object-cover"
                             loading="lazy"
                           />
                         </div>
                       </div>
                     )
-                  ) : isFuture ? (
-                    <div className="w-full h-full rounded-full bg-muted/30" />
-                  ) : plusDays.has(cell.day ?? -1) ? (
-                    <div className="w-full h-full rounded-full bg-secondary flex items-center justify-center">
-                      <Plus className="w-4 h-4 text-muted-foreground" />
+                  ) : showPlus ? (
+                    // Plus icon for days without photos
+                    <div className="w-full h-full rounded-full bg-secondary/60 flex items-center justify-center">
+                      <Plus className="w-3.5 h-3.5 text-muted-foreground/70" />
                     </div>
+                  ) : isFuture ? (
+                    // Future days - lighter
+                    <div className="w-full h-full rounded-full bg-muted/20" />
                   ) : (
-                    <div className="w-full h-full rounded-full bg-secondary/50" />
+                    // Past days without data
+                    <div className="w-full h-full rounded-full bg-secondary/40" />
                   )}
                 </div>
 
                 <span
-                  className={`text-xs font-normal ${
+                  className={`text-[11px] leading-tight ${
                     isToday
-                      ? "text-primary"
+                      ? "text-primary font-medium"
                       : isFuture
-                      ? "text-muted-foreground/50"
-                      : "text-muted-foreground"
+                      ? "text-muted-foreground/40"
+                      : "text-muted-foreground/70"
                   }`}
                 >
                   {cell.day}
-                  {isToday && (
-                    <span className="block w-1 h-1 rounded-full bg-primary mx-auto mt-0.5" />
-                  )}
                 </span>
+                {isToday && (
+                  <span className="w-1 h-1 rounded-full bg-primary mt-0.5" />
+                )}
               </div>
             );
           })}
