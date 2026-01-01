@@ -4,11 +4,9 @@ import TabNav from "@/components/TabNav";
 import CalendarView from "@/components/CalendarView";
 import StatsView from "@/components/StatsView";
 import PhotosView from "@/components/PhotosView";
-import BottomNav from "@/components/BottomNav";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"photos" | "calendar" | "stats">("calendar");
-  const [activeNav, setActiveNav] = useState<"home" | "wallet" | "settings">("home");
 
   return (
     <div className="min-h-screen bg-background flex flex-col max-w-md mx-auto">
@@ -22,14 +20,11 @@ const Index = () => {
       <TabNav activeTab={activeTab} onTabChange={setActiveTab} />
       
       {/* Content Area */}
-      <div className="flex-1 overflow-y-auto pb-40">
+      <div className="flex-1 overflow-y-auto pb-8">
         {activeTab === "photos" && <PhotosView />}
         {activeTab === "calendar" && <CalendarView />}
         {activeTab === "stats" && <StatsView />}
       </div>
-      
-      {/* Bottom Navigation */}
-      <BottomNav activeNav={activeNav} onNavChange={setActiveNav} />
     </div>
   );
 };

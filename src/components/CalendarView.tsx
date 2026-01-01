@@ -1,5 +1,4 @@
-import { Plus } from "lucide-react";
-import { ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { Plus, ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 import expense1 from "@/assets/expense-1.jpg";
 import expense2 from "@/assets/expense-2.jpg";
@@ -81,9 +80,9 @@ const CalendarView = () => {
           </div>
 
           <div className="flex-1 bg-secondary rounded-2xl p-4">
-            <div className="flex justify-center mb-2.5">
+          <div className="flex justify-center mb-2.5">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-income px-3 py-1 text-sm text-income">
-                <ArrowDownLeft className="h-3.5 w-3.5" />
+                <ArrowDownRight className="h-3.5 w-3.5" />
                 Thu
               </span>
             </div>
@@ -121,7 +120,7 @@ const CalendarView = () => {
               <div key={index} className="flex flex-col items-center">
                 <div className="aspect-square w-full mb-0.5">
                   {photos?.length ? (
-                    photos.length === 1 ? (
+                  photos.length === 1 ? (
                       // Single photo - full circular
                       <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
                         <img
@@ -132,9 +131,9 @@ const CalendarView = () => {
                         />
                       </div>
                     ) : (
-                      // Two photos - overlapping circles
-                      <div className="relative w-full h-full">
-                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary z-0">
+                      // Two photos - overlapping circles with isolation
+                      <div className="relative w-full h-full isolate">
+                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
                           <img
                             src={photos[0]}
                             alt=""
@@ -142,7 +141,7 @@ const CalendarView = () => {
                             loading="lazy"
                           />
                         </div>
-                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary z-10">
+                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
                           <img
                             src={photos[1]}
                             alt=""
