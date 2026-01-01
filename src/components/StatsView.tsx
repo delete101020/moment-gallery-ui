@@ -1,6 +1,6 @@
-import { ArrowUpRight, ArrowDownLeft } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
-const categories = [
+const expenses = [
   { name: "Ăn uống", emoji: "🍜", amount: 9856430 },
   { name: "Mua sắm online", emoji: "🛍️", amount: 4412380 },
   { name: "Spa, nail", emoji: "💅", amount: 4620350 },
@@ -8,7 +8,7 @@ const categories = [
   { name: "Grab/Be/Xanh SM", emoji: "🛵", amount: 612400 },
 ];
 
-const income = [{ name: "Lương", emoji: "💰", amount: 30000000 }];
+const incomes = [{ name: "Lương", emoji: "💰", amount: 30000000 }];
 
 const months = [
   { label: "Tháng 8", active: false },
@@ -19,17 +19,20 @@ const months = [
 ];
 
 const StatsView = () => {
+  const totalExpense = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
+
   return (
     <div className="px-4 py-2 animate-fade-in">
       {/* Month Selector */}
-      <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4">
+      <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
         {months.map((month, index) => (
           <button
             key={index}
-            className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
+            className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap transition-all ${
               month.active
                 ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-muted-foreground hover:text-foreground"
+                : "bg-secondary text-muted-foreground"
             }`}
           >
             {month.label}
@@ -37,17 +40,19 @@ const StatsView = () => {
         ))}
       </div>
 
-      {/* Summary Cards */}
-      <div className="flex gap-3 mb-4">
+      {/* Stats Cards - Stacked vertically */}
+      <div className="space-y-3">
         {/* Expenses Card */}
-        <div className="flex-1 bg-card rounded-2xl p-4">
+        <div className="bg-card rounded-2xl p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 rounded-full border-2 border-expense flex items-center justify-center">
-              <ArrowUpRight className="w-5 h-5 text-expense" />
+            <div className="w-10 h-10 rounded-full border border-expense flex items-center justify-center">
+              <ArrowUpRight className="w-4 h-4 text-expense" />
             </div>
             <div>
-              <span className="text-sm text-muted-foreground">Tổng chi</span>
-              <p className="text-lg font-semibold text-expense">-20.682.060đ</p>
+              <span className="text-xs text-muted-foreground">Tổng chi</span>
+              <p className="text-base font-semibold text-expense">
+                -{totalExpense.toLocaleString("vi-VN")}đ
+              </p>
             </div>
           </div>
 
@@ -59,16 +64,16 @@ const StatsView = () => {
             }}
           />
 
-          <div className="space-y-4">
-            {categories.map((cat, index) => (
+          <div className="space-y-3">
+            {expenses.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-xl">
-                  {cat.emoji}
+                <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-lg">
+                  {item.emoji}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-muted-foreground">{cat.name}</p>
-                  <p className="text-base font-medium text-foreground">
-                    -{cat.amount.toLocaleString("vi-VN")}đ
+                  <p className="text-xs text-muted-foreground">{item.name}</p>
+                  <p className="text-sm text-foreground">
+                    -{item.amount.toLocaleString("vi-VN")}đ
                   </p>
                 </div>
               </div>
@@ -77,14 +82,16 @@ const StatsView = () => {
         </div>
 
         {/* Income Card */}
-        <div className="flex-1 bg-card rounded-2xl p-4">
+        <div className="bg-card rounded-2xl p-4">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 rounded-full border-2 border-income flex items-center justify-center">
-              <ArrowDownLeft className="w-5 h-5 text-income" />
+            <div className="w-10 h-10 rounded-full border border-income flex items-center justify-center">
+              <ArrowDownRight className="w-4 h-4 text-income" />
             </div>
             <div>
-              <span className="text-sm text-muted-foreground">Tổng thu</span>
-              <p className="text-lg font-semibold text-income">+30,000,000đ</p>
+              <span className="text-xs text-muted-foreground">Tổng thu</span>
+              <p className="text-base font-semibold text-income">
+                +{totalIncome.toLocaleString("vi-VN")}đ
+              </p>
             </div>
           </div>
 
@@ -96,15 +103,15 @@ const StatsView = () => {
             }}
           />
 
-          <div className="space-y-4">
-            {income.map((item, index) => (
+          <div className="space-y-3">
+            {incomes.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-xl">
+                <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center text-lg">
                   {item.emoji}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-muted-foreground">{item.name}</p>
-                  <p className="text-base font-medium text-income">
+                  <p className="text-xs text-muted-foreground">{item.name}</p>
+                  <p className="text-sm text-income">
                     +{item.amount.toLocaleString("vi-VN")}đ
                   </p>
                 </div>
