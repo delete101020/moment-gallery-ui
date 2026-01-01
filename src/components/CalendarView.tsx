@@ -120,9 +120,9 @@ const CalendarView = () => {
               <div key={index} className="flex flex-col items-center">
                 <div className="aspect-square w-full mb-0.5">
                   {photos?.length ? (
-                  photos.length === 1 ? (
-                      // Single photo - full circular
-                      <div className="w-full h-full rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
+                    photos.length === 1 ? (
+                      // Single photo - full circular with white border
+                      <div className="w-full h-full rounded-full overflow-hidden ring-2 ring-white/80 bg-secondary">
                         <img
                           src={photos[0]}
                           alt=""
@@ -131,9 +131,9 @@ const CalendarView = () => {
                         />
                       </div>
                     ) : (
-                      // Two photos - overlapping circles with isolation
+                      // Two photos - overlapping circles with white border
                       <div className="relative w-full h-full isolate">
-                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
+                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-2 ring-white/80 bg-secondary">
                           <img
                             src={photos[0]}
                             alt=""
@@ -141,7 +141,7 @@ const CalendarView = () => {
                             loading="lazy"
                           />
                         </div>
-                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-1 ring-foreground/10 bg-secondary">
+                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-2 ring-white/80 bg-secondary">
                           <img
                             src={photos[1]}
                             alt=""

@@ -13,8 +13,8 @@ const TabNav = ({ activeTab, onTabChange }: TabNavProps) => {
   ];
 
   return (
-    <div className="flex items-center justify-center px-4 py-2">
-      <div className="inline-flex items-center bg-secondary/50 rounded-full p-1">
+    <div className="px-4 py-2">
+      <div className="flex items-center bg-secondary/50 rounded-full p-1">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -23,10 +23,10 @@ const TabNav = ({ activeTab, onTabChange }: TabNavProps) => {
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 ${
+              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-full transition-all duration-200 ${
                 isActive
                   ? "bg-secondary text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground"
               }`}
             >
               <Icon className="w-4 h-4" />
