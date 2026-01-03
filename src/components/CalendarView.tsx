@@ -121,8 +121,8 @@ const CalendarView = () => {
                 <div className="aspect-square w-full mb-0.5">
                   {photos?.length ? (
                     photos.length === 1 ? (
-                      // Single photo - full circular with white border
-                      <div className="w-full h-full rounded-full overflow-hidden ring-2 ring-white/80 bg-secondary">
+                      // Single photo - slight rounded corners with white border
+                      <div className="w-full h-full rounded-lg overflow-hidden ring-[1.5px] ring-white bg-secondary">
                         <img
                           src={photos[0]}
                           alt=""
@@ -131,9 +131,9 @@ const CalendarView = () => {
                         />
                       </div>
                     ) : (
-                      // Two photos - overlapping circles with white border
+                      // Two photos - overlapping with slight rounded corners
                       <div className="relative w-full h-full isolate">
-                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-2 ring-white/80 bg-secondary">
+                        <div className="absolute left-0 top-0.5 w-[72%] h-[72%] rounded-md overflow-hidden ring-[1.5px] ring-white bg-secondary">
                           <img
                             src={photos[0]}
                             alt=""
@@ -141,7 +141,7 @@ const CalendarView = () => {
                             loading="lazy"
                           />
                         </div>
-                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-full overflow-hidden ring-2 ring-white/80 bg-secondary">
+                        <div className="absolute right-0 bottom-0.5 w-[72%] h-[72%] rounded-md overflow-hidden ring-[1.5px] ring-white bg-secondary">
                           <img
                             src={photos[1]}
                             alt=""
