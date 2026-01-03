@@ -121,31 +121,37 @@ const CalendarView = () => {
                 <div className="aspect-square w-full mb-0.5">
                   {photos?.length ? (
                     photos.length === 1 ? (
-                      // Single photo - slight rounded corners with white border
-                      <div className="w-full h-full rounded-lg overflow-hidden ring-[1.5px] ring-white bg-secondary">
+                      // Single photo - rounded rectangle with white border (less rounded like sample)
+                      <div className="w-full h-full rounded-lg overflow-hidden ring-2 ring-white bg-secondary">
                         <img
                           src={photos[0]}
                           alt=""
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover scale-[1.12]"
                           loading="lazy"
                         />
                       </div>
                     ) : (
-                      // Two photos - overlapping rounded rectangles
+                      // Two photos - smaller tiles, rotated ±45°; centered overlap like the sample
                       <div className="relative w-full h-full isolate">
-                        <div className="absolute left-0 top-0 w-[75%] h-[75%] rounded-xl overflow-hidden ring-[2px] ring-white bg-secondary z-10">
+                        <div
+                          className="absolute left-1/2 top-1/2 w-[62%] h-[62%] rounded-md overflow-hidden ring-2 ring-white bg-secondary z-10 origin-center transform-gpu"
+                          style={{ transform: "translate(-84%, -84%) rotate(-45deg)" }}
+                        >
                           <img
                             src={photos[0]}
                             alt=""
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover scale-[1.35]"
                             loading="lazy"
                           />
                         </div>
-                        <div className="absolute right-0 bottom-0 w-[75%] h-[75%] rounded-xl overflow-hidden ring-[2px] ring-white bg-secondary">
+                        <div
+                          className="absolute left-1/2 top-1/2 w-[62%] h-[62%] rounded-md overflow-hidden ring-2 ring-white bg-secondary origin-center transform-gpu"
+                          style={{ transform: "translate(-16%, -16%) rotate(45deg)" }}
+                        >
                           <img
                             src={photos[1]}
                             alt=""
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover scale-[1.35]"
                             loading="lazy"
                           />
                         </div>
@@ -153,15 +159,15 @@ const CalendarView = () => {
                     )
                   ) : showPlus ? (
                     // Plus icon for days without photos
-                    <div className="w-full h-full rounded-full bg-secondary/60 flex items-center justify-center">
+                    <div className="w-full h-full rounded-lg bg-secondary/60 flex items-center justify-center">
                       <Plus className="w-3.5 h-3.5 text-muted-foreground/70" />
                     </div>
                   ) : isFuture ? (
                     // Future days - lighter
-                    <div className="w-full h-full rounded-full bg-muted/20" />
+                    <div className="w-full h-full rounded-lg bg-muted/20" />
                   ) : (
                     // Past days without data
-                    <div className="w-full h-full rounded-full bg-secondary/40" />
+                    <div className="w-full h-full rounded-lg bg-secondary/40" />
                   )}
                 </div>
 
