@@ -105,7 +105,7 @@ const CalendarView = () => {
         </div>
         
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-x-1 gap-y-1">
+        <div className="grid grid-cols-7 gap-x-2 gap-y-2.5">
           {calendarCells.map((cell, index) => {
             if (cell.isEmpty) {
               return <div key={index} className="aspect-square" />;
