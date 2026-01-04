@@ -105,7 +105,7 @@ const CalendarView = () => {
         </div>
         
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-x-2 gap-y-2.5">
+        <div className="grid grid-cols-7 gap-x-4 gap-y-4">
           {calendarCells.map((cell, index) => {
             if (cell.isEmpty) {
               return <div key={index} className="aspect-square" />;
@@ -118,61 +118,63 @@ const CalendarView = () => {
 
             return (
               <div key={index} className="flex flex-col items-center">
-                <div className="aspect-square w-full mb-0.5">
-                  {photos?.length ? (
-                    photos.length === 1 ? (
-                      // Single photo - rounded rectangle with white border (less rounded like sample)
-                      <div className="w-full h-full rounded-lg overflow-hidden ring-2 ring-white bg-secondary">
-                        <img
-                          src={photos[0]}
-                          alt=""
-                          className="w-full h-full object-cover scale-[1.12]"
-                          loading="lazy"
-                        />
-                      </div>
-                    ) : (
-                      // Two photos - smaller tiles, rotated ±45°; centered overlap like the sample
-                      <div className="relative w-full h-full isolate">
-                        <div
-                          className="absolute left-1/2 top-1/2 w-[62%] h-[62%] rounded-md overflow-hidden ring-2 ring-white bg-secondary z-10 origin-center transform-gpu"
-                          style={{ transform: "translate(-84%, -84%) rotate(-45deg)" }}
-                        >
+                <div className="aspect-square w-full mb-2 flex items-center justify-center">
+                  <div className="aspect-square w-[84%]">
+                    {photos?.length ? (
+                      photos.length === 1 ? (
+                        // Single photo - circle with white ring (sample)
+                        <div className="w-full h-full rounded-full overflow-hidden ring-2 ring-white bg-secondary">
                           <img
                             src={photos[0]}
                             alt=""
-                            className="w-full h-full object-cover scale-[1.35]"
+                            className="w-full h-full object-cover"
                             loading="lazy"
                           />
                         </div>
-                        <div
-                          className="absolute left-1/2 top-1/2 w-[62%] h-[62%] rounded-md overflow-hidden ring-2 ring-white bg-secondary origin-center transform-gpu"
-                          style={{ transform: "translate(-16%, -16%) rotate(45deg)" }}
-                        >
-                          <img
-                            src={photos[1]}
-                            alt=""
-                            className="w-full h-full object-cover scale-[1.35]"
-                            loading="lazy"
-                          />
+                      ) : (
+                        // Two photos - smaller rounded tiles; left on top rotated -45°, right below rotated +45°
+                        <div className="relative w-full h-full isolate">
+                          <div
+                            className="absolute left-1/2 top-1/2 w-[72%] h-[72%] rounded-xl overflow-hidden ring-2 ring-white bg-secondary z-10 origin-center transform-gpu"
+                            style={{ transform: "translate(-82%, -82%) rotate(-45deg)" }}
+                          >
+                            <img
+                              src={photos[0]}
+                              alt=""
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div
+                            className="absolute left-1/2 top-1/2 w-[72%] h-[72%] rounded-xl overflow-hidden ring-2 ring-white bg-secondary origin-center transform-gpu"
+                            style={{ transform: "translate(-18%, -18%) rotate(45deg)" }}
+                          >
+                            <img
+                              src={photos[1]}
+                              alt=""
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          </div>
                         </div>
+                      )
+                    ) : showPlus ? (
+                      // Plus icon - circle (sample)
+                      <div className="w-full h-full rounded-full bg-secondary/70 flex items-center justify-center">
+                        <Plus className="w-4 h-4 text-muted-foreground/70" />
                       </div>
-                    )
-                  ) : showPlus ? (
-                    // Plus icon for days without photos
-                    <div className="w-full h-full rounded-lg bg-secondary/60 flex items-center justify-center">
-                      <Plus className="w-3.5 h-3.5 text-muted-foreground/70" />
-                    </div>
-                  ) : isFuture ? (
-                    // Future days - lighter
-                    <div className="w-full h-full rounded-lg bg-muted/20" />
-                  ) : (
-                    // Past days without data
-                    <div className="w-full h-full rounded-lg bg-secondary/40" />
-                  )}
+                    ) : isFuture ? (
+                      // Future days - rounded square placeholder
+                      <div className="w-full h-full rounded-2xl bg-muted/20" />
+                    ) : (
+                      // Past days without data - rounded square placeholder
+                      <div className="w-full h-full rounded-2xl bg-secondary/40" />
+                    )}
+                  </div>
                 </div>
 
                 <span
-                  className={`text-[11px] leading-tight ${
+                  className={`text-[14px] leading-none ${
                     isToday
                       ? "text-primary font-medium"
                       : isFuture
