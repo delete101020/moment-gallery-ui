@@ -9,37 +9,32 @@ import BottomBar from "@/components/BottomBar";
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"photos" | "calendar" | "stats">("calendar");
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const bottomSentinelRef = useRef<HTMLDivElement | null>(null);
   const [showBottomBar, setShowBottomBar] = useState(false);
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    const root = scrollRef.current;
+    const target = bottomSentinelRef.current;
+    if (!root || !target) return;
 
-    const MIN_SCROLL_PX = 140;
+    // Must match scroll container padding-bottom (pb-28 = 7rem = 112px)
+    const BOTTOM_INSET_PX = 112;
 
-    const recompute = () => {
-      const overflow = el.scrollHeight - el.clientHeight;
-      const scrollable = overflow > MIN_SCROLL_PX;
-      if (!scrollable) {
-        setShowBottomBar(false);
-        return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowBottomBar(entry.isIntersecting),
+      {
+        root,
+        threshold: 0.01,
+        // Treat "bottom reached" as the moment the user gets to the end of content,
+        // not when they scroll into the bottom padding used to make room for the bar.
+        rootMargin: `0px 0px ${BOTTOM_INSET_PX}px 0px`,
       }
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
-      const hasUserScrolled = el.scrollTop > 12;
-      setShowBottomBar(atBottom && hasUserScrolled);
-    };
+    );
 
-    // Recompute after layout settles
-    const raf = requestAnimationFrame(recompute);
-
-    const onScroll = () => recompute();
-    el.addEventListener("scroll", onScroll, { passive: true } as AddEventListenerOptions);
-    window.addEventListener("resize", recompute);
+    observer.observe(target);
 
     return () => {
-      cancelAnimationFrame(raf);
-      el.removeEventListener("scroll", onScroll as EventListener);
-      window.removeEventListener("resize", recompute);
+      observer.disconnect();
     };
   }, [activeTab]);
 
@@ -55,13 +50,18 @@ const Index = () => {
       <TabNav activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Content Area (scrolls) */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto pb-28">
         {activeTab === "photos" && <PhotosView />}
         {activeTab === "calendar" && <CalendarView />}
         {activeTab === "stats" && <StatsView />}
-
-        {showBottomBar && <BottomBar />}
+        <div ref={bottomSentinelRef} className="h-px" aria-hidden="true" />
       </div>
+
+      {showBottomBar && (
+        <div className="fixed inset-x-0 bottom-0 z-50">
+          <BottomBar />
+        </div>
+      )}
     </div>
   );
 };

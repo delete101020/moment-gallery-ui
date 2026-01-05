@@ -92,24 +92,33 @@
   .text-expense {
     color: hsl(var(--expense));
   }
-  
+
   .text-income {
     color: hsl(var(--income));
   }
-  
+
   .bg-expense {
     background-color: hsl(var(--expense));
   }
-  
+
   .bg-income {
     background-color: hsl(var(--income));
   }
-  
+
   .border-expense {
     border-color: hsl(var(--expense));
   }
-  
+
   .border-income {
     border-color: hsl(var(--income));
+  }
+
+  /* Hide scrollbars but keep scrolling (for horizontal month picker, etc.) */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
 }
