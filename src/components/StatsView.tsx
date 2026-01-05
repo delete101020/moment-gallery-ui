@@ -23,7 +23,7 @@ const StatsView = () => {
   return (
     <div className="px-4 py-2 animate-fade-in">
       {/* Month Selector */}
-      <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+      <div className="flex items-center gap-2 mb-4 overflow-x-auto overflow-y-hidden pb-2 -mx-4 px-4 scrollbar-hide">
         {months.map((month, index) => (
           <button
             key={index}
